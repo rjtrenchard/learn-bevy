@@ -1,7 +1,9 @@
 use bevy::prelude::*;
 
 fn main() {
-    App::new().add_system(hello_world).run();
+    App::new().add_systems(Update, hello_world).run();
 }
 
-pub fn hello_world() {}
+fn hello_world() {
+    println!("hello world");
+}
