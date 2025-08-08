@@ -14,6 +14,7 @@ fn hello_world() {
 
 fn test() {
     println!("{:?}", AStruct(12.0));
+    println!("{}", AStruct(1.001).0);
 }
 
 #[derive(Debug)]
