@@ -2,6 +2,8 @@ use bevy::prelude::*;
 
 fn main() {
     App::new()
+        .add_plugins(DefaultPlugins)
+        .add_plugins(HelloPlugin)
         .add_systems(Startup, add_people)
         .add_systems(
             Update,
@@ -42,13 +44,25 @@ fn add_people(mut commands: Commands) {
     ));
 }
 
-fn print_position_system(query: Query<&Position>) {
+fn print_position_system(time: Res<Time>, mut timer: ResMut<GreetTimer>, query: Query<&Position>) {
+    if !timer.0.tick(time.delta()).just_finished() {
+        return;
+    }
+
     for position in &query {
         println!("position: {} {} {}", position.x, position.y, position.z);
     }
 }
 
-fn update_position_system(mut query: Query<&mut Position, With<Person>>) {
+fn update_position_system(
+    time: Res<Time>,
+    mut timer: ResMut<GreetTimer>,
+    mut query: Query<&mut Position, With<Person>>,
+) {
+    if !timer.0.tick(time.delta()).just_finished() {
+        return;
+    }
+
     for mut position in &mut query {
         if position.x == 1.0 {
             position.x = 2.0;
@@ -63,6 +77,9 @@ struct Position {
     z: f32,
 }
 
+#[derive(Resource)]
+struct GreetTimer(Timer);
+
 #[derive(Component)]
 struct Person;
 
@@ -70,3 +87,11 @@ struct Person;
 struct Name(String);
 
 struct Entity(u64);
+
+pub struct HelloPlugin;
+
+impl Plugin for HelloPlugin {
+    fn build(&self, app: &mut App) {
+        app.insert_resource(GreetTimer(Timer::from_seconds(2.0, TimerMode::Repeating)));
+    }
+}
