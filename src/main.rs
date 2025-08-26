@@ -1,6 +1,5 @@
 mod states;
 
-// use crate::states::states::AppState;
 use bevy::prelude::*;
 
 fn main() {
