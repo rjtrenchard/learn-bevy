@@ -1,6 +1,7 @@
-use bevy::prelude::*;
-
 mod states;
+
+// use crate::states::states::AppState;
+use bevy::prelude::*;
 
 fn main() {
     App::new()
@@ -22,5 +23,6 @@ impl Plugin for SetupPlugin {
     fn build(&self, app: &mut App) {
         // app.insert_resource(GreetTimer(Timer::from_seconds(2.0, TimerMode::Repeating)));
         app.add_systems(Startup, setup);
+        app.init_state::<states::AppState>();
     }
 }

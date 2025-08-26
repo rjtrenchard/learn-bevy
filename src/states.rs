@@ -1,11 +1,8 @@
-use bevy::prelude::*;
+use bevy::state::state::States;
 
-mod states {
-    use bevy::state::state::States;
-
-    #[derive(States, Debug, Clone, PartialEq, Eq, Hash)]
-    pub enum AppState {
-        Idle,
-        Running,
-    }
+#[derive(States, Default, Debug, Clone, PartialEq, Eq, Hash)]
+pub enum AppState {
+    #[default]
+    Idle,
+    Running,
 }
