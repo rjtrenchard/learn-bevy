@@ -19,7 +19,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
 
 fn toggle_state(
     state: Res<State<states::AppState>>,
-    mut next_state: ResMut<NextStates<states::AppState>>,
+    mut next_state: ResMut<NextState<states::AppState>>,
 ) {
     match state.get() {
         states::AppState::Running => next_state.set(states::AppState::Idle),
